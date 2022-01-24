@@ -8,11 +8,6 @@ export class TransactionsController {
 
   constructor(private readonly transactionService: TransactionsService) {}
 
-  @Get('/all')
-  public getAll(): Array<TransactionDto> {
-    return this.transactionService.getAll();
-  }
-
   @Post('/commissions')
   public async getCommissions(@Body() transaction: TransactionDto): Promise<CommissionDto> {
     return await this.transactionService.getCommission(transaction);

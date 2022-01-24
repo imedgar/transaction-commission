@@ -45,8 +45,4 @@ export class TransactionsService {
     // Returns the response object
     return commission;
   }
-
-  public getAll(): Array<TransactionDto> {
-    return this.databaseRepository.getAllTransactions();
-  }
 }
