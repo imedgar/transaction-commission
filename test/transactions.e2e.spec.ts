@@ -1,32 +1,32 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { INestApplication } from "@nestjs/common";
 import * as request from "supertest";
-import { TransactionsModule } from "../src/transactions/transactions.module";
-import { TransactionsService } from "../src/transactions/transactions.service";
+import { AppModule } from "../src/app.module";
 
-describe('AppController (e2e)', () => {
+describe('TransactionsController (e2e)', () => {
   let app: INestApplication;
-  const commission = {amount: 1, currency: 'EUR'};
-  let service = { getCommission: () => commission };
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [TransactionsModule],
-    })
-      .overrideProvider(TransactionsService)
-      .useValue(service)
-      .compile();
+      imports: [AppModule],
+    }).compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();
   });
 
-  it(`/POST /transactions/commissions`, () => {
+  it('/POST /transactions/commissions', () => {
+    const response = {amount:1.25,currency:'EUR'}
+
     return request(app.getHttpServer())
       .post('/transactions/commissions')
-      .expect(200)
-      .expect({
-        data: service.getCommission(),
-      });
+      .send({
+        amount: 250,
+        currency: 'EUR',
+        date: new Date(),
+        client_id: 1
+      })
+      .expect(201)
+      .expect(response);
   });
 });

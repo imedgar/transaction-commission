@@ -1,26 +1,22 @@
 import { Rule } from "./rule.interface";
 import { TransactionDto } from "../../transactions/dto/transaction.dto";
+import { DatabaseRepository } from "../../common/database.repository";
 
-export class HighTurnoverRule implements Rule {
+export class ClientDiscountRule implements Rule {
 
-  private transactions: Array<TransactionDto>;
-  private commission: number = 0.3;
-  private transactionTurnOver: number = 1000;
+  private readonly commission: number = 0.05;
+
+  constructor(private databaseRepository: DatabaseRepository) {}
 
   evaluate(transaction: TransactionDto): boolean {
-    let turnover = 0;
-    this.transactions.every(
-      (item) => {
-        if (item.client_id == transaction.client_id) {
-          turnover += transaction.amount;
-        }
-      }
-    );
-    console.log(`client ${transaction.client_id} total amount ${turnover}`);
-    return turnover >= this.transactionTurnOver;
+
+    return this.databaseRepository.getClientsWithDiscount().find(
+      (client) => client == transaction.client_id
+    ) !== undefined;
   }
 
   shouldRun(transaction: TransactionDto): number {
+
     return this.commission;
   }
 }

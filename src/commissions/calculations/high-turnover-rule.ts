@@ -1,20 +1,39 @@
 import { Rule } from "./rule.interface";
 import { TransactionDto } from "../../transactions/dto/transaction.dto";
+import { DatabaseRepository } from "../../common/database.repository";
 
-export class PricingRule implements Rule {
+export class HighTurnoverRule implements Rule {
 
-  private percentage: number = 0.5;
-  private minimumCommission: number = 0.5;
+  constructor(private databaseRepository: DatabaseRepository) {
+  }
+
+  private readonly commission: number = 0.03;
+  private readonly transactionTurnOver: number = 1000;
 
   evaluate(transaction: TransactionDto): boolean {
-    return false;
+
+    let turnover = 0;
+    const requestDate = new Date(transaction.date);
+    this.databaseRepository.getAllTransactions().forEach(
+      (item) => {
+        const itemDate = new Date(item.date);
+        if (item.client_id == transaction.client_id
+          && this.isSameYearMonth(requestDate, itemDate)) {
+          turnover += item.euroAmount;
+        }
+      }
+    );
+    return turnover >= this.transactionTurnOver;
   }
 
   shouldRun(transaction: TransactionDto): number {
-    let commission = (this.percentage / 100) * transaction.amount;
-    if (commission < this.minimumCommission) {
-      commission = this.minimumCommission;
-    }
-    return commission;
+
+    return this.commission;
+  }
+
+  isSameYearMonth(dateA: Date, dateB: Date): boolean {
+
+    return dateA.getFullYear() == dateB.getFullYear()
+      && dateA.getMonth() == dateB.getMonth();
   }
 }
