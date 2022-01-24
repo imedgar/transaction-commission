@@ -2,6 +2,11 @@ import { Rule } from "./rule.interface";
 import { TransactionDto } from "../../transactions/dto/transaction.dto";
 import { DatabaseRepository } from "../../common/database.repository";
 
+/**
+ * Rule #3: High turnover discount
+ * Client after reaching transaction turnover of 1000.00€ (per month) gets a discount
+ * and transaction commission is 0.03€ for the following transactions.
+ */
 export class HighTurnoverRule implements Rule {
 
   constructor(private databaseRepository: DatabaseRepository) {

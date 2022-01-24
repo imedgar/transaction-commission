@@ -21,6 +21,10 @@ export class CommissionsService {
     )
   }
 
+  /**
+   * Based on a set of rules will calculate the minimum commission to apply to the transaction
+   * @param transaction
+   */
   public calculateCommission(transaction: TransactionDto): CommissionDto {
 
     let commission = 0;

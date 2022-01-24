@@ -2,6 +2,10 @@ import { Rule } from "./rule.interface";
 import { TransactionDto } from "../../transactions/dto/transaction.dto";
 import { DatabaseRepository } from "../../common/database.repository";
 
+/**
+ * Rule #2: Client with a discount
+ * Transaction price for the client with ID of 42 is 0.05€ (unless other rules set lower commission).
+ */
 export class ClientDiscountRule implements Rule {
 
   private readonly commission: number = 0.05;

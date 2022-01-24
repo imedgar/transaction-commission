@@ -9,7 +9,12 @@ export class ExchangeRateService {
 
   private readonly defaultCurrency: string = 'EUR';
 
-  // consumer 3rd party API
+  /**
+   * Gets the exchange rate for a given amount in an specific date
+   * @param amount
+   * @param currency
+   * @param date
+   */
   public async exchangeRate(amount: number, currency: string, date: Date): Promise<number> {
 
     const url: string = `https://api.exchangerate.host/${date}`;

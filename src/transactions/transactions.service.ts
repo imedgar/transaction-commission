@@ -14,6 +14,10 @@ export class TransactionsService {
   private readonly logger = new Logger(TransactionsService.name);
   private readonly euro: string = 'EUR';
 
+  /**
+   * Given a transaction gets a calculated commission
+   * @param transaction
+   */
   public async getCommission(transaction: TransactionDto): Promise<CommissionDto> {
 
     // This property will be used to diff the transaction amount from the commission amount

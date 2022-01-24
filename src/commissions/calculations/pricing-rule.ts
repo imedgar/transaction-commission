@@ -1,6 +1,10 @@
 import { Rule } from "./rule.interface";
 import { TransactionDto } from "../../transactions/dto/transaction.dto";
 
+/**
+ * Rule #1: Default pricing
+ * By default the price for every transaction is 0.5% but not less than 0.05€.
+ */
 export class PricingRule implements Rule {
 
   private readonly percentage: number = 0.5;
