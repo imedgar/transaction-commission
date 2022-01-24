@@ -4,6 +4,10 @@
 
 transaction-commission calculation API
 
+## Prerequisites
+
+Please make sure that Node.js (>= 10.13.0, except for v13) is installed on your operating system.
+
 ## Dependencies
 
 - NestJS (https://nestjs.com/)
